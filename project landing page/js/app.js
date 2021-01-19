@@ -60,9 +60,26 @@ function buildNavigation() {
 }
 
 // Add class 'active' to section when near top of viewport
+function setActiveClass() {
+    for (let i = 0; i < sectionList.length; i++) {
+        if (isInViewport(sectionList[i])) {
+            sectionList[i].classList.add("your-active-class");
+        } else {
+            sectionList[i].classList.remove("your-active-class");
+        }
+    }
+}
 
 
 // Scroll to anchor ID using scrollTO event
+function scrollToElement(event) {
+    if (event.target.nodeName === 'A') {
+        const sectionId = event.target.getAttribute('data-id');
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: "smooth" });
+    }
+}
+
 
 
 /**
@@ -70,9 +87,15 @@ function buildNavigation() {
  * Begin Events
  * 
  */
-
-
-
-// Scroll to section on link click
+document.addEventListener('scroll', function() {
+    setActiveClass();
+});
+const navBarList = document.getElementById('navbar__list')
+navBarList.addEventListener('click', function(event) {
+        scrollToElement(event)
+    })
+    // Build menu 
+buildNavigation()
+    // Scroll to section on link click
 
 // Set sections as active
